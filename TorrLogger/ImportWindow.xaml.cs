@@ -37,15 +37,18 @@ namespace TorrLogger
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
+            dlg.CheckFileExists = true;
+            dlg.CheckPathExists = true;
             dlg.DefaultExt = ".torrent";
+            dlg.DereferenceLinks = true;
             dlg.Filter = "Torrents(*.torrent)|*.torrent|All files(*.*)|*.*";
+            dlg.Title = "Select a .torrent to open";
 
             bool? result = dlg.ShowDialog();
 
             if(result == true)
             {
-                string filename = dlg.FileName;
-                int notused = 0;
+                txtFileName.Text = dlg.FileName;
             }
         }
     }
