@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,7 +28,15 @@ namespace TorrLogger
         {
             InitializeComponent();
 
-            //ObservableCollection<TorrentViewModel> torrents = new ObservableCollection<TorrentViewModel>();
+            // configure notify icon
+            _notifyIcon = new NotifyIcon();
+            _notifyIcon.Icon = Properties.Resources.AppIcon;
+            _notifyIcon.Visible = true;
+            _notifyIcon.DoubleClick += new EventHandler(Icon_DoubleClick);
+
+            _priorWindowState = WindowState;
+
+            // test code
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 1, Name = "Torrent1", Size = "123", Seeds = 1, Peers = 10});
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 2, Name = "Torrent2", Size = "456", Seeds = 2, Peers = 9});
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 3, Name = "Torrent3", Size = "789", Seeds = 3, Peers = 8});
@@ -39,10 +48,40 @@ namespace TorrLogger
             dgClients.ItemsSource = ViewManager.Instance.ClientViewModels;
         }
 
+        // properties
+        private NotifyIcon _notifyIcon;
+        private WindowState _priorWindowState;
+
         private void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
             ImportWindow importWindow = new ImportWindow();
             importWindow.ShowDialog();
+        }
+
+        void Icon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            if(WindowState == WindowState.Minimized)
+            {
+                WindowState = _priorWindowState;
+            }
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if(WindowState == WindowState.Minimized)
+            {
+                this.Hide();
+            }
+            else
+            {
+                _priorWindowState = WindowState;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _notifyIcon.Visible = false;
         }
     }
 }

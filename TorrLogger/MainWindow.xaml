@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Torrent Logger" Height="350" Width="525">
+        Title="Torrent Logger" Height="350" Width="725" StateChanged="Window_StateChanged" Closing="Window_Closing">
     <Window.Icon>
         <DrawingImage>
             <DrawingImage.Drawing>
@@ -18,8 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top">
+        <DockPanel Grid.Row="0" Background="Black">
+            <Menu DockPanel.Dock="Top" Background="White" >
                 <MenuItem x:Name="mnuFile" Header="_File">
                     <MenuItem x:Name="mnuOpen" Header="_Open" Click="mnuOpen_Click"/>
                     <MenuItem x:Name="mnuClose" Header="_Close"/>
@@ -28,7 +28,7 @@
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
-        <TabControl Grid.Row="1" x:Name="tabControl" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" FontSize="16">
+        <TabControl Grid.Row="1" x:Name="tabControl" HorizontalAlignment="Stretch" Margin="5, 5, 5, 5" VerticalAlignment="Stretch" FontSize="16" Background="White" >
             <TabItem Header="Import" FontSize="12">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -76,7 +76,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" x:Name="lblISP" Content="Select ISP" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" x:Name="cbISP" Margin="1, 5, 1, 3" HorizontalAlignment="Left" Width="100"/>
+                        <ComboBox Grid.Column="1" x:Name="cbISP" Margin="1, 5, 1, 3" HorizontalAlignment="Left" Width="200"/>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" x:Name="lblTitle" Content="Select Title" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" x:Name="cbTitle" Margin="1, 3, 1, 5" HorizontalAlignment="Left" Width="100"/>
+                        <ComboBox Grid.Column="1" x:Name="cbTitle" Margin="1, 3, 1, 5" HorizontalAlignment="Left" Width="200"/>
                     </Grid>
                     <Button Grid.Row="3" x:Name="btnExport" Content="Export" Margin="0, 10, 5, 5" HorizontalAlignment="Right" Width="100"/>
                 </Grid>
