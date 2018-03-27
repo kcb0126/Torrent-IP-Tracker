@@ -38,5 +38,11 @@ namespace TorrLogger
             ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = 3, IpAddress = "0.43.0.0", Client = "BitTorrent2", StartTime = DateTime.UtcNow, Title = "torrent3", FileHash = "83fde" });
             dgClients.ItemsSource = ViewManager.Instance.ClientViewModels;
         }
+
+        private void mnuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            ImportWindow importWindow = new ImportWindow();
+            importWindow.ShowDialog();
+        }
     }
 }
