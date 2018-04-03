@@ -37,6 +37,7 @@ namespace TorrLogger
             _priorWindowState = WindowState;
 
             // test code
+
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 1, Name = "Torrent1", Size = "123", Seeds = 1, Peers = 10});
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 2, Name = "Torrent2", Size = "456", Seeds = 2, Peers = 9});
             ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 3, Name = "Torrent3", Size = "789", Seeds = 3, Peers = 8});
@@ -52,10 +53,15 @@ namespace TorrLogger
         private NotifyIcon _notifyIcon;
         private WindowState _priorWindowState;
 
-        private void mnuOpen_Click(object sender, RoutedEventArgs e)
+        private void OpenImportDialog()
         {
             ImportWindow importWindow = new ImportWindow();
             importWindow.ShowDialog();
+        }
+
+        private void mnuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenImportDialog();
         }
 
         void Icon_DoubleClick(object sender, EventArgs e)
@@ -82,6 +88,24 @@ namespace TorrLogger
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            OpenImportDialog();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = dgTorrents.SelectedIndex;
+            if(selectedIndex == -1)
+            {
+                System.Windows.MessageBox.Show("Please select torrent to delete.", "Empty selection");
+                return;
+            }
+
+            // do something with selectedIndex;
+            throw new Exception("Not implemented yet");
         }
     }
 }

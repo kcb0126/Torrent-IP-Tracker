@@ -36,15 +36,29 @@
                         <RowDefinition Height="5" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0" x:Name="dgTorrents" AutoGenerateColumns="False" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40"/>
-                            <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="200" />
-                            <DataGridTextColumn Binding="{Binding Size}" Header="Size" Width="100"/>
-                            <DataGridTextColumn Binding="{Binding Seeds}" Header="Seeds" Width="50"/>
-                            <DataGridTextColumn Binding="{Binding Peers}" Header="Peers" Width="50"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" x:Name="dgTorrents" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="200" />
+                                <DataGridTextColumn Binding="{Binding Size}" Header="Size" Width="100"/>
+                                <DataGridTextColumn Binding="{Binding Seeds}" Header="Seeds" Width="50"/>
+                                <DataGridTextColumn Binding="{Binding Peers}" Header="Peers" Width="50"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="btnAdd" Content="Add" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Click="btnAdd_Click" />
+                            <Button Grid.Column="1" x:Name="btnDelete" Content="Delete" HorizontalAlignment="Stretch" Margin="3, 3, 3, 3" Click="btnDelete_Click" />
+                        </Grid>
+                    </Grid>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0,1" Background="White" Foreground="Black"/>
                     <DataGrid Grid.Row="2" x:Name="dgClients" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
