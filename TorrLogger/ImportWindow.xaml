@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Import" Height="190" Width="420" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
+        Title="Import" Height="290" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
     <Grid Background="#FFF6F6F6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="Select a torrent file" Margin="10,10,5,5" />
-            <TextBox Grid.Column="1" x:Name="txtFileName" Margin="5, 10, 5, 5" Padding="0, 5, 0, 0" />
+            <TextBox Grid.Column="1" x:Name="txtFileName" Margin="5, 10, 5, 5" Padding="0, 5, 0, 0" TextChanged="txtFileName_Changed"/>
             <Button Grid.Column="2" x:Name="btnBrowse" Content="Browse..." Padding="5, 0, 5, 0" Margin="5, 10, 10, 5" Click="btnBrowse_Click" />
         </Grid>
         <Grid Grid.Row="1">
@@ -31,7 +31,65 @@
             <Label Grid.Column="0" Content="Title/Name" Margin="10,5,5,5" />
             <TextBox Grid.Column="1" Margin="5, 5, 10, 5" Padding="0, 5, 0, 0" />
         </Grid>
-        <Label Grid.Row="2" Content="This is the Title in the Excel List and given by me." Margin="0, 0, 10, 0" HorizontalAlignment="Right" />
-        <Button Grid.Row="3" x:Name="btnImport" Content="Import" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10" Click="btnImport_Click"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Content="This is the Title in the Excel List and given by me." Margin="0, 0, 10, 0" />
+        </Grid>
+        <Grid Grid.Row="3">
+            <GroupBox Header="Torrent Information">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Name of Torrent file:" />
+                        <Label Grid.Column="1" x:Name="lblName" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Size of Content:" />
+                        <Label Grid.Column="1" x:Name="lblSize" />
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Info-Hash:" />
+                        <Label Grid.Column="1" x:Name="lblHash" />
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Path:" />
+                        <Label Grid.Column="1" x:Name="lblPath" />
+                    </Grid>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2" x:Name="btnImport" Content="Import" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10" Click="btnImport_Click" IsDefault="True" IsEnabled="False"/>
+            <Button Grid.Column="1" x:Name="btnCancel" Content="Cancel" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10" Click="btnCancel_Click" IsCancel="True"/>
+        </Grid>
     </Grid>
 </Window>
