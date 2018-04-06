@@ -27,7 +27,7 @@ namespace TorrLogger
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 4, Name = "Torrent4", Size = "890", Seeds = 4, Peers = 6 });
+            // ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 4, Name = "Torrent4", Size = "890", Seeds = 4, Peers = 6 });
 
             this.Close();
         }
@@ -61,10 +61,16 @@ namespace TorrLogger
             try
             {
                 torrent = Torrent.Load(txtFileName.Text);
+                txtName.Text = torrent.Name;
                 lblName.Content = Path.GetFileName(txtFileName.Text);
                 double size = torrent.Size;
                 string sizeUnit = "";
-                if(size >= 1024000)
+                if(size >= 1048576000)
+                {
+                    size = size / (1024 * 1024 * 1024);
+                    sizeUnit = "GB";
+                }
+                else if(size >= 1024000)
                 {
                     size = size / (1024 * 1024);
                     sizeUnit = "MB";

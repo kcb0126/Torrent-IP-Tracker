@@ -12,6 +12,6 @@ namespace TorrLogger.ViewModels
         public string Name { get; set; }
         public string Size { get; set; }
         public int Seeds { get; set; }
-        public int Peers { get; set; }
+        public int Leechs { get; set; }
     }
 }

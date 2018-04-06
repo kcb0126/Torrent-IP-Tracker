@@ -86,6 +86,7 @@
     <Compile Include="Managers\SQLiteManager.cs" />
     <Compile Include="Managers\TorrentsManager.cs" />
     <Compile Include="Managers\ViewManager.cs" />
+    <Compile Include="Models\TorrentModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\TorrentViewModel.cs" />
     <Page Include="ImportWindow.xaml">
@@ -133,9 +134,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\AppIcon.ico" />
   </ItemGroup>
