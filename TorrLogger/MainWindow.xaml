@@ -47,7 +47,7 @@
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="200" />
                                 <DataGridTextColumn Binding="{Binding Size}" Header="Size" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding Seeds}" Header="Seeds" Width="50"/>
-                                <DataGridTextColumn Binding="{Binding Peers}" Header="Peers" Width="50"/>
+                                <DataGridTextColumn Binding="{Binding Leechs}" Header="Leechs" Width="50"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Row="1">
@@ -65,8 +65,7 @@
                             <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40" />
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
                             <DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />
-                            <DataGridTextColumn Binding="{Binding StartTime}" Header="Start Time" Width="100" />
-                            <DataGridTextColumn Binding="{Binding EndTime}" Header="End Time" Width="100" />
+                            <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                         </DataGrid.Columns>
