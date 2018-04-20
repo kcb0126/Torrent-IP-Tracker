@@ -97,7 +97,7 @@ namespace MonoTorrent.Client.Connections
         public IPV4Connection(Socket socket, bool isIncoming)
             : this(socket, (IPEndPoint)socket.RemoteEndPoint, isIncoming)
         {
-
+                
         }
 
 
