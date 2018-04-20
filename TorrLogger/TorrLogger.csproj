@@ -45,6 +45,10 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -86,7 +90,9 @@
     <Compile Include="Managers\SQLiteManager.cs" />
     <Compile Include="Managers\TorrentsManager.cs" />
     <Compile Include="Managers\ViewManager.cs" />
+    <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\TorrentModel.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\TorrentViewModel.cs" />
     <Page Include="ImportWindow.xaml">

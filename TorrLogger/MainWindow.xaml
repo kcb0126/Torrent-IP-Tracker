@@ -28,7 +28,7 @@
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
-        <TabControl Grid.Row="1" x:Name="tabControl" HorizontalAlignment="Stretch" Margin="5, 5, 5, 5" VerticalAlignment="Stretch" FontSize="16" Background="White" >
+        <TabControl Grid.Row="1" x:Name="tabControl" HorizontalAlignment="Stretch" Margin="5, 5, 5, 5" VerticalAlignment="Stretch" FontSize="16" Background="White" SelectionChanged="tabcontrol_SelectionChanged" >
             <TabItem Header="Import" FontSize="12">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -46,8 +46,7 @@
                                 <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40"/>
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="200" />
                                 <DataGridTextColumn Binding="{Binding Size}" Header="Size" Width="100"/>
-                                <DataGridTextColumn Binding="{Binding Seeds}" Header="Seeds" Width="50"/>
-                                <DataGridTextColumn Binding="{Binding Leechs}" Header="Leechs" Width="50"/>
+                                <DataGridTextColumn Binding="{Binding Hash}" Header="Info Hash" Width="150"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Row="1">
@@ -64,6 +63,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40" />
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
                             <DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />
                             <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
@@ -81,7 +81,15 @@
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <DataGrid Grid.Row="0" x:Name="dgExport">
-                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding x}" Header="No" Width="40" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="IP Address" Width="100" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="Port" Width="50" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="Client" Width="100" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="Date&amp;Time" Width="150" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="Title" Width="100" />
+                            <DataGridTextColumn Binding="{Binding x}" Header="File Hash" Width="200" />
+                        </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
+using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +19,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TorrLogger.Managers;
 using TorrLogger.ViewModels;
+using System.Diagnostics;
+using System.Dynamic;
 
 namespace TorrLogger
 {
@@ -36,16 +41,7 @@ namespace TorrLogger
 
             _priorWindowState = WindowState;
 
-            // test code
-
-            ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 1, Name = "Torrent1", Size = "123", Seeds = 1, Leechs = 10});
-            ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 2, Name = "Torrent2", Size = "456", Seeds = 2, Leechs = 9});
-            ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 3, Name = "Torrent3", Size = "789", Seeds = 3, Leechs = 8});
             dgTorrents.ItemsSource = ViewManager.Instance.TorrentViewModels;
-
-            ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = 1, IpAddress = "0.0.0.0", Client = "BitTorrent1", DateTime = DateTime.Now, Title = "torrent1", FileHash = "1abc353" });
-            ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = 2, IpAddress = "0.0.1.0", Client = "BitTorrent3", DateTime = DateTime.Today, Title = "torrent2", FileHash = "328fa3" });
-            ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = 3, IpAddress = "0.43.0.0", Client = "BitTorrent2", DateTime = DateTime.UtcNow, Title = "torrent3", FileHash = "83fde" });
             dgClients.ItemsSource = ViewManager.Instance.ClientViewModels;
         }
 
@@ -106,6 +102,24 @@ namespace TorrLogger
 
             // do something with selectedIndex;
             throw new Exception("Not implemented yet");
+        }
+
+        private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabControl != e.Source as System.Windows.Controls.TabControl) {
+                return;
+            }
+
+            if(tabControl.SelectedIndex == 1)
+            {
+                cbISP.Items.Clear();
+                List<string> isps = TorrentsManager.Instance.GetAllIsps();
+                foreach(var isp in isps)
+                {
+                    cbISP.Items.Add(isp);
+                }
+            }
+            
         }
     }
 }

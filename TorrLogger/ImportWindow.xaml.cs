@@ -27,7 +27,17 @@ namespace TorrLogger
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-            // ViewManager.Instance.TorrentViewModels.Add(new TorrentViewModel { No = 4, Name = "Torrent4", Size = "890", Seeds = 4, Peers = 6 });
+            int result = TorrentsManager.Instance.AddTorrent(txtFileName.Text, txtName.Text, torrent);
+            if(result == 1)
+            {
+                MessageBox.Show("The torrent you are trying to add is already in the list of torrents.");
+                return;
+            }
+            else if(result == 2)
+            {
+                MessageBox.Show("The name is duplicated. Please type another name.");
+                return;
+            }
 
             this.Close();
         }
@@ -64,27 +74,7 @@ namespace TorrLogger
                 txtName.Text = torrent.Name;
                 lblName.Content = Path.GetFileName(txtFileName.Text);
                 double size = torrent.Size;
-                string sizeUnit = "";
-                if(size >= 1048576000)
-                {
-                    size = size / (1024 * 1024 * 1024);
-                    sizeUnit = "GB";
-                }
-                else if(size >= 1024000)
-                {
-                    size = size / (1024 * 1024);
-                    sizeUnit = "MB";
-                }
-                else if(size >= 1000)
-                {
-                    size = size / 1024;
-                    sizeUnit = "KB";
-                }
-                else
-                {
-                    sizeUnit = "bytes";
-                }
-                lblSize.Content = string.Format("{0:0.##} {1}", size, sizeUnit);
+                lblSize.Content = Utils.Utils.FileSizeExpression(size);
                 lblHash.Content = torrent.InfoHash.ToString();
                 lblPath.Content = Path.GetDirectoryName(txtFileName.Text);
                 btnImport.IsEnabled = true;
