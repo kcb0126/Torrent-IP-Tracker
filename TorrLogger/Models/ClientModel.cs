@@ -11,6 +11,7 @@ namespace TorrLogger.Models
         public TorrentModel TorrentModel { get; set; }
         public string IpAddress { get; set; }
         public int Port { get; set; }
+        public string Client { get; set; }
         public DateTime DateTime { get; set; }
         public string ISP { get; set; }
     }

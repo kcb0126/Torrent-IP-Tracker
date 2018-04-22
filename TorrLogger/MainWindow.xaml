@@ -80,15 +80,15 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0" x:Name="dgExport">
+                    <DataGrid Grid.Row="0" x:Name="dgExport" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding x}" Header="No" Width="40" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="IP Address" Width="100" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="Port" Width="50" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="Client" Width="100" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="Date&amp;Time" Width="150" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="Title" Width="100" />
-                            <DataGridTextColumn Binding="{Binding x}" Header="File Hash" Width="200" />
+                            <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40" />
+                            <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
+                            <DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />
+                            <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
+                            <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
@@ -97,7 +97,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" x:Name="lblISP" Content="Select ISP" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" x:Name="cbISP" Margin="1, 5, 1, 3" HorizontalAlignment="Left" Width="200"/>
+                        <ComboBox Grid.Column="1" x:Name="cbISP" Margin="1, 5, 1, 3" HorizontalAlignment="Left" Width="200" SelectionChanged="cbISP_Or_cbTitle_SelectionChanged"/>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -105,7 +105,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" x:Name="lblTitle" Content="Select Title" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" x:Name="cbTitle" Margin="1, 3, 1, 5" HorizontalAlignment="Left" Width="200"/>
+                        <ComboBox Grid.Column="1" x:Name="cbTitle" Margin="1, 3, 1, 5" HorizontalAlignment="Left" Width="200" SelectionChanged="cbISP_Or_cbTitle_SelectionChanged"/>
                     </Grid>
                     <Button Grid.Row="3" x:Name="btnExport" Content="Export" Margin="0, 10, 5, 5" HorizontalAlignment="Right" Width="100"/>
                 </Grid>

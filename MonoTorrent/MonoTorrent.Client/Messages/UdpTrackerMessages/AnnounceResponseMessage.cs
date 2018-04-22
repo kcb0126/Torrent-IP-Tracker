@@ -99,8 +99,8 @@ namespace MonoTorrent.Client.Messages.UdpTracker
         {
             while(offset <= (buffer.Length - 6))
             {
-                int ip = IPAddress.NetworkToHostOrder(ReadInt(buffer, ref offset));
-                ushort port = (ushort)ReadShort(buffer, ref offset);
+                var ip = (uint)IPAddress.NetworkToHostOrder(ReadInt(buffer, ref offset));
+                var port = (ushort)ReadShort(buffer, ref offset);
                 peers.Add(new Peer("", new Uri("tcp://" + new IPEndPoint(new IPAddress(ip), port).ToString())));
             }
         }

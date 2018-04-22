@@ -43,6 +43,8 @@ namespace TorrLogger
 
             dgTorrents.ItemsSource = ViewManager.Instance.TorrentViewModels;
             dgClients.ItemsSource = ViewManager.Instance.ClientViewModels;
+            dgExport.ItemsSource = ViewManager.Instance.ClientViewModelsForExport;
+            ViewManager.Instance.ClientsGrid = dgClients;
         }
 
         // properties
@@ -101,7 +103,11 @@ namespace TorrLogger
             }
 
             // do something with selectedIndex;
-            throw new Exception("Not implemented yet");
+            //throw new Exception("Not implemented yet");
+            var clientViewModel = new ClientViewModel { No = ViewManager.Instance.ClientViewModels.Count, IpAddress = "1.2.3.4", Port = 4567, Client = "peer.ClientApp.Client.ToString()", Title = "Title", FileHash = "hashahsh", DateTime = DateTime.Now };
+
+            ViewManager.Instance.ClientViewModels.Add(clientViewModel);
+
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -113,13 +119,46 @@ namespace TorrLogger
             if(tabControl.SelectedIndex == 1)
             {
                 cbISP.Items.Clear();
+                cbISP.Items.Add("All");
                 List<string> isps = TorrentsManager.Instance.GetAllIsps();
                 foreach(var isp in isps)
                 {
                     cbISP.Items.Add(isp);
                 }
+                cbISP.SelectedIndex = 0;
+
+                cbTitle.Items.Clear();
+                cbTitle.Items.Add("All");
+                List<string> titles = TorrentsManager.Instance.GetAllTitles();
+                foreach(var title in titles)
+                {
+                    cbTitle.Items.Add(title);
+                }
+                cbTitle.SelectedIndex = 0;
             }
-            
+        }
+
+        private void cbISP_Or_cbTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string isp;
+            try
+            {
+                isp = cbISP.SelectedItem.ToString();
+            }
+            catch
+            {
+                isp = "All";
+            }
+            string name;
+            try
+            {
+                name = cbTitle.SelectedItem.ToString();
+            }
+            catch
+            {
+                name = "All";
+            }
+            TorrentsManager.Instance.GetClientViewModelsFromIspAndName(isp, name, ViewManager.Instance.ClientViewModelsForExport);
         }
     }
 }

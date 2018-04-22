@@ -244,9 +244,8 @@ namespace MonoTorrent.Client
 
             t.WaitHandle.WaitOne();
 
-            // uncaught exception
-            //if (t.StoredException != null)
-            //    throw new TorrentException("Exception in mainloop", t.StoredException);
+            if (t.StoredException != null)
+                throw new TorrentException("Exception in mainloop", t.StoredException);
         }
 
         public uint QueueTimeout(TimeSpan span, TimeoutTask task)

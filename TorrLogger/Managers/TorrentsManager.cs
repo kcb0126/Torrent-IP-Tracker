@@ -15,6 +15,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using TorrLogger.Models;
 using TorrLogger.ViewModels;
 
@@ -101,7 +102,9 @@ namespace TorrLogger.Managers
             {
                 foreach(var peer in torrent.TorrentManager.GetPeers())
                 {
-                    var uri = peer.Uri;
+                    var uri = peer.ConnectionUri;
+                    Debug.WriteLine(uri.ToString());
+//                    Debug.WriteLine(peer.ClientApp.Client.ToString());
                     var isExist = false;
                     foreach(var client in clientModels)
                     {
@@ -123,7 +126,7 @@ namespace TorrLogger.Managers
                     ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp};
                     clientModels.Add(newClient);
 
-                    ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = ViewManager.Instance.ClientViewModels.Count, IpAddress = newClient.IpAddress, Port = newClient.Port, Client = peer.ClientApp.Client.ToString(), Title = torrent.Name, FileHash = torrent.TorrentManager.Torrent.InfoHash.ToString(), DateTime = newClient.DateTime });
+                    ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = ViewManager.Instance.ClientViewModels.Count, IpAddress = newClient.IpAddress, Port = newClient.Port, Client = "peer.ClientApp.Client.ToString()", Title = newClient.TorrentModel.Name, FileHash = newClient.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), DateTime = newClient.DateTime });
                 }
             }
         }
@@ -143,7 +146,7 @@ namespace TorrLogger.Managers
         string fastResumeFile;
         string dhtNodeFile;
 
-        int port = 12345;
+        int port = 4567;
 
         EngineSettings engineSettings;
         ClientEngine engine;
@@ -161,6 +164,32 @@ namespace TorrLogger.Managers
                 }
             }
             return isps;
+        }
+
+        public List<string> GetAllTitles()
+        {
+            List<string> titles = new List<string>();
+            foreach(TorrentModel torrent in torrentModels)
+            {
+                titles.Add(torrent.Name);
+            }
+            return titles;
+        }
+
+        public void GetClientViewModelsFromIspAndName(string isp, string name, ObservableCollection<ClientViewModel> viewModels)
+        {
+            viewModels.Clear();
+            int nNo = 0;
+            foreach(ClientModel model in clientModels)
+            {
+                if(isp == "All" || isp == model.ISP)
+                {
+                    if(name == "All" || name == model.TorrentModel.Name)
+                    {
+                        viewModels.Add(new ClientViewModel { No = ++nNo, IpAddress = model.IpAddress, Port = model.Port, Title = model.TorrentModel.Name, Client = model.Client, FileHash = model.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), DateTime = model.DateTime });
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -258,34 +287,45 @@ namespace TorrLogger.Managers
         static void manager_PeersFound(object sender, PeersAddedEventArgs e)
         {
             Debug.WriteLine(string.Format("Found {0} new peers and {1} existing peers", e.NewPeers, e.ExistingPeers));//throw new Exception("The method or operation is not implemented.");
-            foreach (var torrent in Instance.torrentModels)
+            foreach (var peer in e.TorrentManager.GetPeers())
             {
-                foreach (var peer in e.TorrentManager.GetPeers())
+                var uri = peer.ConnectionUri;
+                Debug.WriteLine(uri.ToString());
+//                Debug.WriteLine(peer.ClientApp.Client.ToString());
+                var isExist = false;
+                foreach (var client in Instance.clientModels)
                 {
-                    var uri = peer.Uri;
-                    var isExist = false;
-                    foreach (var client in Instance.clientModels)
+                    if (uri.Host.Equals(client.IpAddress) && e.TorrentManager.Torrent.InfoHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash))
                     {
-                        if (uri.Host.Equals(client.IpAddress) && torrent.TorrentManager.Torrent.InfoHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash))
-                        {
-                            isExist = true;
-                            break;
-                        }
-                    }
-                    if (isExist)
-                    {
+                        isExist = true;
                         break;
                     }
-                    dynamic ispAndCountry = Utils.Utils.IspAndCountryFromIp(uri.Host);
-                    if (ispAndCountry.Country != "Germany")
-                    {
-                        break;
-                    }
-                    ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp };
-                    Instance.clientModels.Add(newClient);
-
-                    ViewManager.Instance.ClientViewModels.Add(new ClientViewModel { No = ViewManager.Instance.ClientViewModels.Count, IpAddress = newClient.IpAddress, Port = newClient.Port, Client = peer.ClientApp.Client.ToString(), Title = torrent.Name, FileHash = torrent.TorrentManager.Torrent.InfoHash.ToString(), DateTime = newClient.DateTime });
                 }
+                if (isExist)
+                {
+                    break;
+                }
+                dynamic ispAndCountry = Utils.Utils.IspAndCountryFromIp(uri.Host);
+                if(ispAndCountry.Country == "Unknown")
+                {
+                    continue;
+                }
+                //if (ispAndCountry.Country != "Germany")
+                //{
+                //    break;
+                //}
+                TorrentModel torrent = new TorrentModel {Id = -1, Name="Unknown", FileName = e.TorrentManager.Torrent.TorrentPath, TorrentManager = e.TorrentManager };
+                foreach(var tmp in Instance.torrentModels)
+                {
+                    if(tmp.TorrentManager == e.TorrentManager)
+                    {
+                        torrent = tmp;
+                    }
+                }
+                ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = "peer.ClientApp.Client.ToString()", TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp };
+                Instance.clientModels.Add(newClient);
+
+                ViewManager.Instance.AddClientViewModel(newClient.IpAddress, newClient.Port, torrent.Name, newClient.Client, torrent.TorrentManager.Torrent.InfoHash.ToString());
             }
         }
 

@@ -36,20 +36,17 @@ namespace TorrLogger.Utils
             return string.Format("{0:0.##} {1}", size, sizeUnit);
         }
 
-        //public static string CountryFromIp(string ip)
-        //{
-        //    var json = new WebClient().DownloadString("http://ip-api.com/json/" + ip);
-        //    dynamic obj = JsonConvert.DeserializeObject(json);
-        //    string country = obj.country;
-
-        //    return country;
-        //}
-
         public static ExpandoObject IspAndCountryFromIp(string ip)
         {
             var json = new WebClient().DownloadString("http://ip-api.com/json/" + ip);
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             dynamic result = new ExpandoObject();
+            if(jsonObj.status != "success")
+            {
+                result.Country = "Unknown";
+                result.Isp = "Unknown";
+                return result;
+            }
             result.Country = jsonObj.country;
             result.Isp = jsonObj.isp;
             return result;

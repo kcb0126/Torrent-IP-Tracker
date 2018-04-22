@@ -505,10 +505,10 @@ namespace MonoTorrent.Client
             return infohash.GetHashCode();
         }
 
-        public List<PeerId> GetPeers()
+        public List<Peer> GetPeers()
         {
-            return (List<PeerId>)ClientEngine.MainLoop.QueueWait((MainLoopJob)delegate {
-                return new List<PeerId>(peers.ConnectedPeers);
+            return (List<Peer>)ClientEngine.MainLoop.QueueWait((MainLoopJob)delegate {
+                return new List<Peer>(peers.AllPeers());
             });
         }
 
@@ -614,8 +614,8 @@ namespace MonoTorrent.Client
 
                 if (TrackerManager.CurrentTracker != null)
                 {
-                    if (this.trackerManager.CurrentTracker.CanScrape)
-                        this.TrackerManager.Scrape();
+                    //if (this.trackerManager.CurrentTracker.CanScrape)
+                    //    this.TrackerManager.Scrape();
                     this.trackerManager.Announce(TorrentEvent.Started); // Tell server we're starting
                 }
 
