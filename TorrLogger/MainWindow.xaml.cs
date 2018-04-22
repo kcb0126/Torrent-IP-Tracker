@@ -104,10 +104,8 @@ namespace TorrLogger
 
             // do something with selectedIndex;
             //throw new Exception("Not implemented yet");
-            var clientViewModel = new ClientViewModel { No = ViewManager.Instance.ClientViewModels.Count, IpAddress = "1.2.3.4", Port = 4567, Client = "peer.ClientApp.Client.ToString()", Title = "Title", FileHash = "hashahsh", DateTime = DateTime.Now };
-
-            ViewManager.Instance.ClientViewModels.Add(clientViewModel);
-
+            TorrentsManager.Instance.RemoveTorrentAt(selectedIndex);
+            ViewManager.Instance.TorrentViewModels.RemoveAt(selectedIndex);
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -118,6 +116,10 @@ namespace TorrLogger
 
             if(tabControl.SelectedIndex == 1)
             {
+                // Test code for export as .xlsx
+                TorrentsManager.Instance.AddTestClients();
+
+
                 cbISP.Items.Clear();
                 cbISP.Items.Add("All");
                 List<string> isps = TorrentsManager.Instance.GetAllIsps();
@@ -159,6 +161,21 @@ namespace TorrLogger
                 name = "All";
             }
             TorrentsManager.Instance.GetClientViewModelsFromIspAndName(isp, name, ViewManager.Instance.ClientViewModelsForExport);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.CheckPathExists = true;
+            dlg.DefaultExt = ".xlsx";
+            dlg.Filter = "Excel Workbook(*.xlsx)|*.xlsx";
+            dlg.Title = "Save";
+
+            DialogResult result = dlg.ShowDialog();
+            if(result == System.Windows.Forms.DialogResult.OK)
+            {
+                ExcelManager.Instance.SaveClientViewModels(ViewManager.Instance.ClientViewModelsForExport, dlg.FileName);
+            }
         }
     }
 }

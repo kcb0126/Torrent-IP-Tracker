@@ -39,17 +39,28 @@ namespace TorrLogger.Utils
         public static ExpandoObject IspAndCountryFromIp(string ip)
         {
             var json = new WebClient().DownloadString("http://ip-api.com/json/" + ip);
-            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            dynamic jsonObj;
             dynamic result = new ExpandoObject();
-            if(jsonObj.status != "success")
+            try
+            {
+                jsonObj = JsonConvert.DeserializeObject(json);
+
+                if (jsonObj.status != "success")
+                {
+                    result.Country = "Unknown";
+                    result.Isp = "Unknown";
+                    return result;
+                }
+                result.Country = jsonObj.country;
+                result.Isp = jsonObj.isp;
+                return result;
+            }
+            catch
             {
                 result.Country = "Unknown";
                 result.Isp = "Unknown";
                 return result;
             }
-            result.Country = jsonObj.country;
-            result.Isp = jsonObj.isp;
-            return result;
         }
     }
 }

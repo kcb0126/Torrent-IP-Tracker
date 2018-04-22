@@ -41,7 +41,7 @@ namespace TorrLogger.Managers
             // directories for torrent node
             string basePath = Environment.CurrentDirectory;
             downloadsPath = Path.Combine(basePath, "Downloads");
-            fastResumeFile = Path.Combine(basePath, "fastresume.data");
+            //fastResumeFile = Path.Combine(basePath, "fastresume.data"); // remove fast resume
             dhtNodeFile = Path.Combine(basePath, "DhtNodes");
 
             // Create the settings which the engine will use
@@ -76,11 +76,11 @@ namespace TorrLogger.Managers
 
             try
             {
-                fastResume = BEncodedValue.Decode<BEncodedDictionary>(File.ReadAllBytes(fastResumeFile));
+                //fastResume = BEncodedValue.Decode<BEncodedDictionary>(File.ReadAllBytes(fastResumeFile)); // remove fast resume
             }
             catch
             {
-                fastResume = new BEncodedDictionary();
+                //fastResume = new BEncodedDictionary(); // remove fast resume
             }
 
             workerTorrentsManage.DoWork += WorkerTorrentsManage_DoWork;
@@ -143,7 +143,7 @@ namespace TorrLogger.Managers
         private BackgroundWorker workerTorrentsManage = new BackgroundWorker();
 
         string downloadsPath;
-        string fastResumeFile;
+        //string fastResumeFile; // remove fast resume
         string dhtNodeFile;
 
         int port = 4567;
@@ -151,7 +151,19 @@ namespace TorrLogger.Managers
         EngineSettings engineSettings;
         ClientEngine engine;
 
-        BEncodedDictionary fastResume;
+        //BEncodedDictionary fastResume; // remove fast resume
+
+        public void AddTestClients()
+        {
+            if (torrentModels.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < 10; i ++)
+            {
+                clientModels.Add(new ClientModel { TorrentModel = torrentModels[0], IpAddress = "12.34.56.78", Port = 12345, Client = "Client", DateTime = DateTime.Now, ISP = "Test ISP" });
+            }
+        }
 
         public List<string> GetAllIsps()
         {
@@ -228,10 +240,10 @@ namespace TorrLogger.Managers
             // When any preprocessing has been completed, you create a TorrentManager
             // which you then register with the engine.
             TorrentManager manager = new TorrentManager(torrent, downloadsPath, torrentDefaults);
-            if(fastResume.ContainsKey(torrent.InfoHash.ToHex()))
-            {
-                manager.LoadFastResume(new FastResume((BEncodedDictionary)fastResume[torrent.InfoHash.ToHex()]));
-            }
+            //if(fastResume.ContainsKey(torrent.InfoHash.ToHex())) // remove fast resume
+            //{ // remove fast resume
+            //    manager.LoadFastResume(new FastResume((BEncodedDictionary)fastResume[torrent.InfoHash.ToHex()])); // remove fast resume
+            //} // remove fast resume
             engine.Register(manager);
             manager.PeersFound += new EventHandler<PeersAddedEventArgs>(manager_PeersFound);
 
@@ -245,6 +257,20 @@ namespace TorrLogger.Managers
             models_Changed();
 
             return 0;
+        }
+
+        public void RemoveTorrentAt(int index)
+        {
+            var model = torrentModels[index];
+            var manager = model.TorrentManager;
+            manager.Stop();
+            while (manager.State != TorrentState.Stopped)
+            {
+                Debug.WriteLine("{0} is {1}", model.Name, manager.State);
+                Thread.Sleep(250);
+            }
+            //fastResume.Add(manager.Torrent.InfoHash.ToHex(), manager.SaveFastResume().Encode()); // remove fast resume
+            torrentModels.RemoveAt(index);
         }
 
         private List<TorrentModel> torrentModels = new List<TorrentModel>();
@@ -331,8 +357,8 @@ namespace TorrLogger.Managers
 
         private static void shutdown()
         {
-            BEncodedDictionary fastResume = new BEncodedDictionary();
-            foreach(var model in Instance.torrentModels)
+            //BEncodedDictionary fastResume = new BEncodedDictionary(); // remove fast resume
+            foreach (var model in Instance.torrentModels)
             {
                 var manager = model.TorrentManager;
                 manager.Stop();
@@ -341,12 +367,12 @@ namespace TorrLogger.Managers
                     Debug.WriteLine("{0} is {1}", model.Name, manager.State);
                     Thread.Sleep(250);
                 }
-                fastResume.Add(manager.Torrent.InfoHash.ToHex(), manager.SaveFastResume().Encode());
+                //fastResume.Add(manager.Torrent.InfoHash.ToHex(), manager.SaveFastResume().Encode()); // remove fast resume
             }
 #if !DISABLE_DHT
             File.WriteAllBytes(Instance.dhtNodeFile, Instance.engine.DhtEngine.SaveNodes());
 #endif
-            File.WriteAllBytes(Instance.fastResumeFile, fastResume.Encode());
+            //File.WriteAllBytes(Instance.fastResumeFile, fastResume.Encode()); // remove fast resume
             Instance.engine.Dispose();
 
             foreach(TraceListener lst in Debug.Listeners)
