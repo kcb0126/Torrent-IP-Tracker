@@ -654,7 +654,7 @@ namespace MonoTorrent.Client
             engine.DhtEngine.GetPeers(InfoHash);
 
             // Second, get peers every 10 minutes (if we need them)
-            ClientEngine.MainLoop.QueueTimeout(TimeSpan.FromMinutes(10), delegate {
+            ClientEngine.MainLoop.QueueTimeout(TimeSpan.FromMinutes(1), delegate {
                 // Torrent is no longer active
                 if (!Mode.CanAcceptConnections)
                     return false;
