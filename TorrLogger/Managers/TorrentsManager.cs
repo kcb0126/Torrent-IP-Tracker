@@ -40,7 +40,8 @@ namespace TorrLogger.Managers
         {
             // directories for torrent node
             string basePath = Environment.CurrentDirectory;
-            downloadsPath = Path.Combine(basePath, "Downloads");
+//            downloadsPath = Path.Combine(basePath, "Downloads");
+            downloadsPath = "Q:\\fakedownloaddir";
             //fastResumeFile = Path.Combine(basePath, "fastresume.data"); // remove fast resume
             dhtNodeFile = Path.Combine(basePath, "DhtNodes");
 
@@ -71,8 +72,8 @@ namespace TorrLogger.Managers
             engine.DhtEngine.Start(nodes);
 
             // If the SavePath does not exist, we want to create it.
-            if (!Directory.Exists(engine.Settings.SavePath))
-                Directory.CreateDirectory(engine.Settings.SavePath);
+            //if (!Directory.Exists(engine.Settings.SavePath))
+            //    Directory.CreateDirectory(engine.Settings.SavePath);
 
             try
             {
@@ -262,15 +263,15 @@ namespace TorrLogger.Managers
         public void RemoveTorrentAt(int index)
         {
             var model = torrentModels[index];
-            var manager = model.TorrentManager;
-            manager.Stop();
-            while (manager.State != TorrentState.Stopped)
-            {
-                Debug.WriteLine("{0} is {1}", model.Name, manager.State);
-                Thread.Sleep(250);
-            }
-            //fastResume.Add(manager.Torrent.InfoHash.ToHex(), manager.SaveFastResume().Encode()); // remove fast resume
             torrentModels.RemoveAt(index);
+            //var manager = model.TorrentManager;
+            //manager.Stop();
+            //while (manager.State != TorrentState.Stopped)
+            //{
+            //    Debug.WriteLine("{0} is {1}", model.Name, manager.State);
+            //    Thread.Sleep(250);
+            //}
+            //fastResume.Add(manager.Torrent.InfoHash.ToHex(), manager.SaveFastResume().Encode()); // remove fast resume
         }
 
         private List<TorrentModel> torrentModels = new List<TorrentModel>();
@@ -340,13 +341,17 @@ namespace TorrLogger.Managers
                 //{
                 //    break;
                 //}
-                TorrentModel torrent = new TorrentModel {Id = -1, Name="Unknown", FileName = e.TorrentManager.Torrent.TorrentPath, TorrentManager = e.TorrentManager };
+                TorrentModel torrent = null;
                 foreach(var tmp in Instance.torrentModels)
                 {
                     if(tmp.TorrentManager == e.TorrentManager)
                     {
                         torrent = tmp;
                     }
+                }
+                if(torrent == null)
+                {
+                    continue;
                 }
                 ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = "peer.ClientApp.Client.ToString()", TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp };
                 Instance.clientModels.Add(newClient);

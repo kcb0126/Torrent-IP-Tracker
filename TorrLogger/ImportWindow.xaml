@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Import" Height="290" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
+        Title="Import" Height="310" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
     <Grid Background="#FFF6F6F6">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

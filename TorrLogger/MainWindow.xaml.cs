@@ -102,10 +102,16 @@ namespace TorrLogger
                 return;
             }
 
+            MessageBoxResult result = System.Windows.MessageBox.Show("Are you sure you want to remove the selected torrent?", "TorrLogger", System.Windows.MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.No)
+            {
+                return;
+            }
+
             // do something with selectedIndex;
             //throw new Exception("Not implemented yet");
-            TorrentsManager.Instance.RemoveTorrentAt(selectedIndex);
             ViewManager.Instance.TorrentViewModels.RemoveAt(selectedIndex);
+            TorrentsManager.Instance.RemoveTorrentAt(selectedIndex);
         }
 
         private void tabcontrol_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -116,10 +122,6 @@ namespace TorrLogger
 
             if(tabControl.SelectedIndex == 1)
             {
-                // Test code for export as .xlsx
-                TorrentsManager.Instance.AddTestClients();
-
-
                 cbISP.Items.Clear();
                 cbISP.Items.Add("All");
                 List<string> isps = TorrentsManager.Instance.GetAllIsps();
