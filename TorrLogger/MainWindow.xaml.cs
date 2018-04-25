@@ -122,13 +122,16 @@ namespace TorrLogger
 
             if(tabControl.SelectedIndex == 1)
             {
+                //TorrentsManager.Instance.AddTestClients();
                 cbISP.Items.Clear();
                 cbISP.Items.Add("All");
                 List<string> isps = TorrentsManager.Instance.GetAllIsps();
+                isps.Sort();
                 foreach(var isp in isps)
                 {
                     cbISP.Items.Add(isp);
                 }
+
                 cbISP.SelectedIndex = 0;
 
                 cbTitle.Items.Clear();

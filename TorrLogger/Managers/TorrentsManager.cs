@@ -109,9 +109,10 @@ namespace TorrLogger.Managers
             {
                 return;
             }
+            string[] isps = new string[] { "First ISP", "second ISP", "Third ISP", "forth ISP", "Fifth ISP", "sixth ISP", "Seventh ISP", "eighth ISP", "Ninth ISP", "tenth ISP" };
             for (int i = 0; i < 10; i ++)
             {
-                clientModels.Add(new ClientModel { TorrentModel = torrentModels[0], IpAddress = "12.34.56.78", Port = 12345, Client = "Client", DateTime = DateTime.Now, ISP = "Test ISP", Country = "Test Country" });
+                clientModels.Add(new ClientModel { TorrentModel = torrentModels[0], IpAddress = "12.34.56.78", Port = 12345, Client = "Client", DateTime = DateTime.Now, ISP = isps[i], Country = "Test Country" });
             }
         }
 
