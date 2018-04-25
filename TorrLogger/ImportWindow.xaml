@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Import" Height="310" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
+        Title="Import" Height="280" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
     <Grid Background="#FFF6F6F6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -33,13 +32,6 @@
             <TextBox Grid.Column="1" x:Name="txtName" Margin="5, 5, 10, 5" Padding="0, 5, 0, 0" />
         </Grid>
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Content="This is the Title in the Excel List and given by me." Margin="0, 0, 10, 0" />
-        </Grid>
-        <Grid Grid.Row="3">
             <GroupBox Header="Torrent Information">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -83,7 +75,7 @@
                 </Grid>
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
