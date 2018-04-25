@@ -149,7 +149,7 @@ namespace TorrLogger.Managers
                 {
                     if(name == "All" || name == model.TorrentModel.Name)
                     {
-                        viewModels.Add(new ClientViewModel { No = ++nNo, IpAddress = model.IpAddress, Port = model.Port, Title = model.TorrentModel.Name, Client = model.Client, FileHash = model.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), DateTime = model.DateTime, Country = model.Country, ISP = model.ISP });
+                        viewModels.Add(new ClientViewModel { No = ++nNo, IpAddress = model.IpAddress, Port = model.Port, Title = model.TorrentModel.Name, Client = model.Client, FileHash = model.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), Date = model.DateTime.ToString("dd:MM:yyyy"), Time = model.DateTime.ToString("HH:mm:ss"), Country = model.Country, ISP = model.ISP });
                     }
                 }
             }

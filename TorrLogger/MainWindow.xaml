@@ -65,7 +65,8 @@
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
                             <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
                             <!--<DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />-->
-                            <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding Time}" Header="Time" Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                             <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />
@@ -88,7 +89,8 @@
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
                             <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
                             <!--<DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />-->
-                            <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding Time}" Header="Time" Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                             <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />
