@@ -15,5 +15,7 @@ namespace TorrLogger.ViewModels
         public DateTime DateTime { get; set; }
         public string Title { get; set; }
         public string FileHash { get; set; }
+        public string Country { get; set; }
+        public string ISP { get; set; }
     }
 }

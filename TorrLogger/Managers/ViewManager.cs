@@ -33,9 +33,9 @@ namespace TorrLogger.Managers
 
         private int lastIndexOfClientViewModel = 0;
 
-        public void AddClientViewModel(string ip, int port, string title, string client, string hash)
+        public void AddClientViewModel(string ip, int port, string title, string client, string hash, string isp, string country)
         {
-            var clientViewModel = new ClientViewModel { No = ++lastIndexOfClientViewModel, IpAddress = ip, Port = port, Client = client, Title = title, FileHash = hash, DateTime = DateTime.Now };
+            var clientViewModel = new ClientViewModel { No = ++lastIndexOfClientViewModel, IpAddress = ip, Port = port, Client = client, Title = title, FileHash = hash, DateTime = DateTime.Now, Country = country, ISP = isp };
             Action<ClientViewModel> addMethod = ViewManager.Instance.ClientViewModels.Add;
             Application.Current.Dispatcher.BeginInvoke(addMethod, clientViewModel);
         }

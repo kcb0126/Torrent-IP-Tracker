@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Torrent Logger" Height="350" Width="725" StateChanged="Window_StateChanged" Closing="Window_Closing">
+        Title="Torrent Logger" Height="410" Width="830" StateChanged="Window_StateChanged" Closing="Window_Closing">
     <Window.Icon>
         <DrawingImage>
             <DrawingImage.Drawing>
@@ -68,6 +68,8 @@
                             <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />
+                            <DataGridTextColumn Binding="{Binding ISP}" Header="ISP" Width="150" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -89,6 +91,8 @@
                             <DataGridTextColumn Binding="{Binding DateTime}" Header="Date&amp;Time" Width="150" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />
+                            <DataGridTextColumn Binding="{Binding ISP}" Header="ISP" Width="150" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
