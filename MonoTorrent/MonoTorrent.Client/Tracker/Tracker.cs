@@ -111,8 +111,8 @@ namespace MonoTorrent.Client.Tracker
         protected Tracker(Uri uri)
         {
             Check.Uri(uri);
-            MinUpdateInterval = TimeSpan.FromMinutes(3);
-            UpdateInterval = TimeSpan.FromMinutes(30);
+            MinUpdateInterval = TimeSpan.FromMinutes(1);
+            UpdateInterval = TimeSpan.FromMinutes(2);
             this.uri = uri;
         }
 

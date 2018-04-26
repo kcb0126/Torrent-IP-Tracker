@@ -132,7 +132,7 @@ namespace MonoTorrent.Client
 				this.timeToWaitUntilIdle = value;
 			}
 		}
-		private TimeSpan timeToWaitUntilIdle = TimeSpan.FromMinutes(10);
+		private TimeSpan timeToWaitUntilIdle = TimeSpan.FromMinutes(1);
 
 		/// <summary>
 		/// When considering peers that have given us data, the inactivity manager will wait TimeToWaiTUntilIdle plus (Number of bytes we've been sent / ConnectionRetentionFactor) seconds

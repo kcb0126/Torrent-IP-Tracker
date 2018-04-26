@@ -165,9 +165,9 @@ namespace MonoTorrent.Tracker
             torrents = new Dictionary<InfoHash, SimpleTorrentManager>();
             this.trackerId = trackerId;
 
-            announceInterval = TimeSpan.FromMinutes(45);
-            minAnnounceInterval = TimeSpan.FromMinutes(10);
-            timeoutInterval = TimeSpan.FromMinutes(50);
+            announceInterval = TimeSpan.FromMinutes(2);
+            minAnnounceInterval = TimeSpan.FromMinutes(1);
+            timeoutInterval = TimeSpan.FromMinutes(5);
 
             Client.ClientEngine.MainLoop.QueueTimeout(TimeSpan.FromSeconds(1), delegate {
                 Requests.Tick();
