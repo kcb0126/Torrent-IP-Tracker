@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TorrLogger"
         mc:Ignorable="d"
-        Title="Import" Height="280" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
+        Title="Import" Height="290" Width="560" Icon="Images/AppIcon.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="Manual" >
     <Grid Background="#FFF6F6F6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -81,8 +81,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" x:Name="btnImport" Content="Import" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10" Click="btnImport_Click" IsDefault="True" IsEnabled="False"/>
-            <Button Grid.Column="1" x:Name="btnCancel" Content="Cancel" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10" Click="btnCancel_Click" IsCancel="True"/>
+            <Button Grid.Column="2" x:Name="btnImport" Content="Import" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 10" Click="btnImport_Click" IsDefault="True" IsEnabled="False"/>
+            <Button Grid.Column="1" x:Name="btnCancel" Content="Cancel" Padding="7, 5, 7, 7" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 10" Click="btnCancel_Click" IsCancel="True"/>
         </Grid>
     </Grid>
 </Window>

@@ -67,7 +67,7 @@ namespace MonoTorrent.Dht
         internal static MainLoop MainLoop = new MainLoop("DhtLoop");
 
         bool bootStrap = true;
-        TimeSpan bucketRefreshTimeout = TimeSpan.FromMinutes(15);
+        TimeSpan bucketRefreshTimeout = TimeSpan.FromMinutes(30);
         bool disposed;
         MessageLoop messageLoop;
         DhtState state = DhtState.NotReady;

@@ -505,10 +505,10 @@ namespace MonoTorrent.Client
             return infohash.GetHashCode();
         }
 
-        public List<Peer> GetPeers()
+        public List<PeerId> GetPeers()
         {
-            return (List<Peer>)ClientEngine.MainLoop.QueueWait((MainLoopJob)delegate {
-                return new List<Peer>(peers.AllPeers());
+            return (List<PeerId>)ClientEngine.MainLoop.QueueWait((MainLoopJob)delegate {
+                return new List<PeerId>(peers.ConnectedPeers);
             });
         }
 

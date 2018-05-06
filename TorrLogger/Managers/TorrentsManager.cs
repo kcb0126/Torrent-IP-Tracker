@@ -71,6 +71,12 @@ namespace TorrLogger.Managers
             dhtListener.Start();
             engine.DhtEngine.Start(nodes);
 
+            workerTorrentsManage.DoWork += WorkerTorrentsManage_DoWork;
+            workerTorrentsManage.ProgressChanged += WorkerTorrentsManage_ProgressChanged;
+            workerTorrentsManage.WorkerSupportsCancellation = true;
+            workerTorrentsManage.WorkerReportsProgress = true;
+            workerTorrentsManage.RunWorkerAsync();
+
             // If the SavePath does not exist, we want to create it.
             //if (!Directory.Exists(engine.Settings.SavePath))
             //    Directory.CreateDirectory(engine.Settings.SavePath);
@@ -92,6 +98,70 @@ namespace TorrLogger.Managers
             //Thread.GetDomain().UnhandledException += delegate { shutdown(); };
         }
 
+        private void WorkerTorrentsManage_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            foreach (var model in torrentModels)
+            {
+                foreach (var peer in model.TorrentManager.GetPeers())
+                {
+                    var uri = peer.Uri;
+                    Debug.WriteLine(uri.ToString());
+                    var isExist = false;
+                    foreach (var client in clientModels)
+                    {
+                        if (uri.Host.Equals(client.IpAddress) && model.TorrentManager.Torrent.InfoHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash))
+                        {
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if (isExist)
+                    {
+                        break;
+                    }
+                    dynamic ispAndCountry = Utils.Utils.IspAndCountryFromIp(uri.Host);
+                    if ((string)ispAndCountry.Country == "Unknown")
+                    {
+                        continue;
+                    }
+                    //if (ispAndCountry.Country != "Germany")
+                    //{
+                    //    break;
+                    //}
+                    TorrentModel torrent = null;
+                    foreach (var tmp in Instance.torrentModels)
+                    {
+                        if (tmp.TorrentManager == model.TorrentManager)
+                        {
+                            torrent = tmp;
+                        }
+                    }
+                    if (torrent == null)
+                    {
+                        continue;
+                    }
+                    ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = "peer.ClientApp.Client.ToString()", TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp, Country = ispAndCountry.Country };
+                    Instance.clientModels.Add(newClient);
+
+                    ViewManager.Instance.AddClientViewModel(newClient.IpAddress, newClient.Port, torrent.Name, newClient.Client, torrent.TorrentManager.Torrent.InfoHash.ToString(), (string)ispAndCountry.Isp, (string)ispAndCountry.Country);
+                }
+            }
+        }
+
+        private void WorkerTorrentsManage_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                workerTorrentsManage.ReportProgress(0);
+                for (int i = 0; i < 1 * 60; i++)
+                {
+                    if (workerTorrentsManage.CancellationPending) break;
+                    Thread.Sleep(1000);
+                }
+                if (workerTorrentsManage.CancellationPending) break;
+            }
+        }
+
         string downloadsPath;
         //string fastResumeFile; // remove fast resume
         string dhtNodeFile;
@@ -100,6 +170,8 @@ namespace TorrLogger.Managers
 
         EngineSettings engineSettings;
         ClientEngine engine;
+
+        private BackgroundWorker workerTorrentsManage = new BackgroundWorker();
 
         //BEncodedDictionary fastResume; // remove fast resume
 
@@ -264,50 +336,6 @@ namespace TorrLogger.Managers
         static void manager_PeersFound(object sender, PeersAddedEventArgs e)
         {
             Debug.WriteLine(string.Format("Found {0} new peers and {1} existing peers", e.NewPeers, e.ExistingPeers));//throw new Exception("The method or operation is not implemented.");
-            foreach (var peer in e.TorrentManager.GetPeers())
-            {
-                var uri = peer.ConnectionUri;
-                Debug.WriteLine(uri.ToString());
-//                Debug.WriteLine(peer.ClientApp.Client.ToString());
-                var isExist = false;
-                foreach (var client in Instance.clientModels)
-                {
-                    if (uri.Host.Equals(client.IpAddress) && e.TorrentManager.Torrent.InfoHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash))
-                    {
-                        isExist = true;
-                        break;
-                    }
-                }
-                if (isExist)
-                {
-                    break;
-                }
-                dynamic ispAndCountry = Utils.Utils.IspAndCountryFromIp(uri.Host);
-                if((string)ispAndCountry.Country == "Unknown")
-                {
-                    continue;
-                }
-                //if (ispAndCountry.Country != "Germany")
-                //{
-                //    break;
-                //}
-                TorrentModel torrent = null;
-                foreach(var tmp in Instance.torrentModels)
-                {
-                    if(tmp.TorrentManager == e.TorrentManager)
-                    {
-                        torrent = tmp;
-                    }
-                }
-                if(torrent == null)
-                {
-                    continue;
-                }
-                ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = "peer.ClientApp.Client.ToString()", TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp, Country = ispAndCountry.Country };
-                Instance.clientModels.Add(newClient);
-
-                ViewManager.Instance.AddClientViewModel(newClient.IpAddress, newClient.Port, torrent.Name, newClient.Client, torrent.TorrentManager.Torrent.InfoHash.ToString(), (string)ispAndCountry.Isp, (string)ispAndCountry.Country);
-            }
         }
 
         private static void _shutdown()

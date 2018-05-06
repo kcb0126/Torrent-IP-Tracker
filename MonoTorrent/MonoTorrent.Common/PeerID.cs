@@ -117,10 +117,11 @@ namespace MonoTorrent.Common
         static readonly Regex mldonkey = new Regex("-ML/d\\./d\\./d");
         static readonly Regex opera = new Regex("OP/d{4}");
         static readonly Regex queenbee = new Regex("Q/d-/d-/d--");
-        static readonly Regex standard = new Regex(@"-(([A-Za-z\~]{2})\d{4})-*");
+        static readonly Regex standard = new Regex(@"-(([A-Za-z\~]{2})[\dA-Fa-fS]{4})-*");
         static readonly Regex shadows = new Regex(@"(([A-Za-z]{1})\d{3})----*");
         static readonly Regex xbt = new Regex("XBT/d/{3}");
         private Client client;
+        private string version;
         private string peerId;
         private string shortId;
 
@@ -165,6 +166,7 @@ namespace MonoTorrent.Common
 			{
 				this.shortId = "WebSeed";
 				this.client = Client.WebSeed;
+                this.version = "";
 				return;
 			}
 
@@ -315,6 +317,18 @@ namespace MonoTorrent.Common
                         this.client = Client.Unknown;
                         break;
                 }
+                string rawVersion = this.shortId.Substring(2).Replace("S", "");
+                rawVersion = string.Join<char>(".", rawVersion.ToCharArray());
+                this.version = rawVersion.Replace("a", "10")
+                    .Replace("b", "11")
+                    .Replace("c", "12")
+                    .Replace("d", "13")
+                    .Replace("e", "14")
+                    .Replace("f", "15");
+                if(this.client == Client.Unknown)
+                {
+                    this.version = "";
+                }
                 return;
             }
             #endregion
@@ -354,6 +368,7 @@ namespace MonoTorrent.Common
                         this.client = Client.Unknown;
                         break;
                 }
+                this.version = "";
                 return;
             }
             #endregion
@@ -363,6 +378,7 @@ namespace MonoTorrent.Common
             {
                 this.shortId = "M";
                 this.client = Client.BitTorrent;
+                this.version = "";
                 return;
             }
             #endregion
@@ -372,6 +388,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.BitLord;
                 this.shortId = "lord";
+                this.version = "";
                 return;
             }
             #endregion
@@ -381,6 +398,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.BitComet;
                 this.shortId = "BC";
+                this.version = "";
                 return;
             }
             #endregion
@@ -390,6 +408,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.XBTClient;
                 this.shortId = "XBT";
+                this.version = "";
                 return;
             }
             #endregion
@@ -407,6 +426,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.MLDonkey;
                 this.shortId = "ML";
+                this.version = "";
                 return;
             }
             #endregion
@@ -416,6 +436,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.BitsOnWheels;
                 this.shortId = "BOW";
+                this.version = "";
                 return;
             }
             #endregion
@@ -425,6 +446,7 @@ namespace MonoTorrent.Common
             {
                 this.client = Client.QueenBee;
                 this.shortId = "Q";
+                this.version = "";
                 return;
             }
             #endregion
@@ -434,12 +456,14 @@ namespace MonoTorrent.Common
             {
                 this.shortId = m.Groups[1].Value;
                 this.client = Client.BitTornado;
+                this.version = "";
                 return;
             }
             #endregion
 
             this.client = Client.Unknown;
             this.shortId = peerId;
+            this.version = "";
             System.Diagnostics.Trace.WriteLine("Unrecognisable clientid style: " + peerId);
         }
 
