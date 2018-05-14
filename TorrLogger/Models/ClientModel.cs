@@ -15,5 +15,6 @@ namespace TorrLogger.Models
         public DateTime DateTime { get; set; }
         public string ISP { get; set; }
         public string Country { get; set; }
+        public bool IsConnected { get; set; }
     }
 }

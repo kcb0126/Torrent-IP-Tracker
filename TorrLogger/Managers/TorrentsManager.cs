@@ -100,24 +100,42 @@ namespace TorrLogger.Managers
 
         private void WorkerTorrentsManage_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            List<ClientModel> connectedModels = new List<ClientModel>();
             foreach (var model in torrentModels)
             {
-                foreach (var peer in model.TorrentManager.GetPeers())
+                var peers = model.TorrentManager.GetPeers();
+                foreach (var peer in peers)
                 {
                     var uri = peer.Uri;
                     Debug.WriteLine(uri.ToString());
                     var isExist = false;
+                    var isConnected = false;
+                    ClientModel existingClient = null;
                     foreach (var client in clientModels)
                     {
                         if (uri.Host.Equals(client.IpAddress) && model.TorrentManager.Torrent.InfoHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash))
                         {
+                            if (client.IsConnected)
+                            {
+                                if(!connectedModels.Contains(client))
+                                {
+                                    connectedModels.Add(client);
+                                }
+                                isConnected = true;
+                            }
+                            else
+                            {
+                                client.IsConnected = true;
+                                connectedModels.Add(client);
+                            }
                             isExist = true;
+                            existingClient = client;
                             break;
                         }
                     }
-                    if (isExist)
+                    if (isExist && isConnected)
                     {
-                        break;
+                        continue;
                     }
                     dynamic ispAndCountry = Utils.Utils.IspAndCountryFromIp(uri.Host);
                     if ((string)ispAndCountry.Country == "Unknown")
@@ -140,10 +158,32 @@ namespace TorrLogger.Managers
                     {
                         continue;
                     }
-                    ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = "peer.ClientApp.Client.ToString()", TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp, Country = ispAndCountry.Country };
-                    Instance.clientModels.Add(newClient);
 
-                    ViewManager.Instance.AddClientViewModel(newClient.IpAddress, newClient.Port, torrent.Name, newClient.Client, torrent.TorrentManager.Torrent.InfoHash.ToString(), (string)ispAndCountry.Isp, (string)ispAndCountry.Country);
+                    if(isExist/* && !isConnected*/)
+                    {
+                        ViewManager.Instance.AddClientViewModel(existingClient);
+                    }
+                    else
+                    {
+                        ClientModel newClient = new ClientModel { IpAddress = uri.Host, Port = uri.Port, Client = peer.ClientApp.ClientExp, TorrentModel = torrent, DateTime = DateTime.Now, ISP = ispAndCountry.Isp, Country = ispAndCountry.Country, IsConnected = true };
+                        clientModels.Add(newClient);
+
+                        ViewManager.Instance.AddClientViewModel(newClient);
+                    }
+                }
+            }
+            foreach(var viewModel in ViewManager.Instance.ClientViewModels)
+            {
+                viewModel.IsActive = false;
+                foreach(var client in connectedModels)
+                {
+                    viewModel.IsActive = false;
+                    if(viewModel.IpAddress.Equals(client.IpAddress) && viewModel.FileHash.Equals(client.TorrentModel.TorrentManager.Torrent.InfoHash.ToString()))
+                    {
+                        viewModel.IsActive = true;
+                        viewModel.EndDate = DateTime.Now.ToString("dd:MM:yyyy");
+                        viewModel.EndTime = DateTime.Now.ToString("HH:mm:ss");
+                    }
                 }
             }
         }
@@ -184,7 +224,9 @@ namespace TorrLogger.Managers
             string[] isps = new string[] { "First ISP", "second ISP", "Third ISP", "forth ISP", "Fifth ISP", "sixth ISP", "Seventh ISP", "eighth ISP", "Ninth ISP", "tenth ISP" };
             for (int i = 0; i < 10; i ++)
             {
-                clientModels.Add(new ClientModel { TorrentModel = torrentModels[0], IpAddress = "12.34.56.78", Port = 12345, Client = "Client", DateTime = DateTime.Now, ISP = isps[i], Country = "Test Country" });
+                var client = new ClientModel { TorrentModel = torrentModels[0], IpAddress = "12.34.56.78", Port = 12345, Client = "Client", DateTime = DateTime.Now, ISP = isps[i], Country = "Test Country" };
+                clientModels.Add(client);
+                ViewManager.Instance.AddClientViewModel(client);
             }
         }
 
@@ -215,13 +257,13 @@ namespace TorrLogger.Managers
         {
             viewModels.Clear();
             int nNo = 0;
-            foreach(ClientModel model in clientModels)
+            foreach(var viewModel in ViewManager.Instance.ClientViewModels)
             {
-                if(isp == "All" || isp == model.ISP)
+                if(isp == "All" || isp == viewModel.ISP)
                 {
-                    if(name == "All" || name == model.TorrentModel.Name)
+                    if(name == "All" || name == viewModel.Title)
                     {
-                        viewModels.Add(new ClientViewModel { No = ++nNo, IpAddress = model.IpAddress, Port = model.Port, Title = model.TorrentModel.Name, Client = model.Client, FileHash = model.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), Date = model.DateTime.ToString("dd:MM:yyyy"), Time = model.DateTime.ToString("HH:mm:ss"), Country = model.Country, ISP = model.ISP });
+                        viewModels.Add(new ClientViewModel { No = ++nNo, IpAddress = viewModel.IpAddress, Port = viewModel.Port, Title = viewModel.Title, Client = viewModel.Client, FileHash = viewModel.FileHash, Date = viewModel.Date, Time = viewModel.Time, EndDate = viewModel.EndDate, EndTime = viewModel.EndTime, Country = viewModel.Country, ISP = viewModel.ISP });
                     }
                 }
             }

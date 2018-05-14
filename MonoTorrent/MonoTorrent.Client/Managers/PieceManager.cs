@@ -93,6 +93,7 @@ namespace MonoTorrent.Client
 
         public void PieceDataReceived(PeerId peer, PieceMessage message)
         {
+            return;
             Piece piece;
             if (picker.ValidatePiece(peer, message.PieceIndex, message.StartOffset, message.RequestLength, out piece))
             {

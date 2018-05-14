@@ -287,8 +287,8 @@ namespace MonoTorrent.Client
             PeerId id = (PeerId)state;
             if (!succeeded)
             {
-                CleanupSocket (id, "Could not send message");
-                return;
+                //CleanupSocket (id, "Could not send message");
+                //return;
             }
 
             try
@@ -299,7 +299,7 @@ namespace MonoTorrent.Client
             }
             catch (Exception)
             {
-                CleanupSocket (id, "Could not send message");
+                //CleanupSocket (id, "Could not send message");
             }
         }
 
@@ -313,8 +313,8 @@ namespace MonoTorrent.Client
             PeerId id = (PeerId)state;
             if (!succeeded)
             {
-                CleanupSocket(id, "Handshaking failed");
-                return;
+                //CleanupSocket(id, "Handshaking failed");
+                //return;
             }
 
             try
@@ -334,7 +334,7 @@ namespace MonoTorrent.Client
             }
             catch (TorrentException ex)
             {
-                CleanupSocket(id, ex.Message);
+                //CleanupSocket(id, ex.Message);
             }
         }
 
@@ -371,7 +371,7 @@ namespace MonoTorrent.Client
             }
             catch (Exception ex)
             {
-                CleanupSocket(id, ex.Message);
+                //CleanupSocket(id, ex.Message);
             }
         }
 
@@ -466,8 +466,8 @@ namespace MonoTorrent.Client
                 bool maxAlreadyOpen = OpenConnections >= Math.Min(this.MaxOpenConnections, id.TorrentManager.Settings.MaxConnections);
                 if (!succeeded || id.Peer.PeerId == engine.PeerId || maxAlreadyOpen)
                 {
-                    CleanupSocket (id, "Connection was not accepted");
-                    return;
+                    //CleanupSocket (id, "Connection was not accepted");
+                    //return;
                 }
 
                 if (id.TorrentManager.Peers.ActivePeers.Contains(id.Peer))
@@ -492,7 +492,7 @@ namespace MonoTorrent.Client
             }
             catch (Exception e)
             {
-                CleanupSocket (id, e.Message);
+                //CleanupSocket (id, e.Message);
             }
         }
 
@@ -503,8 +503,8 @@ namespace MonoTorrent.Client
             PeerId id = (PeerId) state;
             if (!successful)
             {
-                id.ConnectionManager.CleanupSocket (id, "Could not receive a message");
-                return;
+                //id.ConnectionManager.CleanupSocket (id, "Could not receive a message");
+                //return;
             }
 
             try
@@ -519,7 +519,7 @@ namespace MonoTorrent.Client
             }
             catch (TorrentException ex)
             {
-                id.ConnectionManager.CleanupSocket (id, ex.Message);
+                //id.ConnectionManager.CleanupSocket (id, ex.Message);
             }
         }
 
@@ -553,7 +553,7 @@ namespace MonoTorrent.Client
             }
             catch (Exception e)
             {
-                CleanupSocket(id, "Exception calling SendMessage: " + e.Message);
+                //CleanupSocket(id, "Exception calling SendMessage: " + e.Message);
             }
         }
 

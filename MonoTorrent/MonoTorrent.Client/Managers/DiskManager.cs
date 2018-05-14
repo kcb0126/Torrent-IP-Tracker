@@ -106,8 +106,8 @@ namespace MonoTorrent.Client
                     }
                     catch (Exception ex)
                     {
-                        if (write.Manager != null)
-                            SetError(write.Manager, Reason.WriteFailure, ex);
+                        //if (write.Manager != null)
+                        //    SetError(write.Manager, Reason.WriteFailure, ex);
                     }
                 }
 

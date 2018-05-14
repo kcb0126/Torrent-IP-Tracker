@@ -64,9 +64,11 @@
                             <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40" />
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
                             <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
-                            <!--<DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />-->
-                            <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="80" />
-                            <DataGridTextColumn Binding="{Binding Time}" Header="Time" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Date}" Header="Start Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding Time}" Header="Start Time" Width="70" />
+                            <DataGridTextColumn Binding="{Binding EndDate}" Header="End Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding EndTime}" Header="End Time" Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                             <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />
@@ -88,9 +90,11 @@
                             <DataGridTextColumn Binding="{Binding No}" Header="No" Width="40" />
                             <DataGridTextColumn Binding="{Binding IpAddress}" Header="IP Address" Width="100" />
                             <DataGridTextColumn Binding="{Binding Port}" Header="Port" Width="50" />
-                            <!--<DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />-->
-                            <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="80" />
-                            <DataGridTextColumn Binding="{Binding Time}" Header="Time" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Client}" Header="Client" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Date}" Header="Start Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding Time}" Header="Start Time" Width="70" />
+                            <DataGridTextColumn Binding="{Binding EndDate}" Header="End Date" Width="80" />
+                            <DataGridTextColumn Binding="{Binding EndTime}" Header="End Time" Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="100" />
                             <DataGridTextColumn Binding="{Binding FileHash}" Header="File Hash" Width="200" />
                             <DataGridTextColumn Binding="{Binding Country}" Header="Country" Width="100" />

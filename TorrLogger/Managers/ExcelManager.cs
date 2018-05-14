@@ -45,28 +45,34 @@ namespace TorrLogger.Managers
                 oSheet.Cells[1, 1] = "No";
                 oSheet.Cells[1, 2] = "IP Address";
                 oSheet.Cells[1, 3] = "Port";
-                oSheet.Cells[1, 4] = "Data";
-                oSheet.Cells[1, 5] = "Time";
-                oSheet.Cells[1, 6] = "Title";
-                oSheet.Cells[1, 7] = "File Hash";
-                oSheet.Cells[1, 8] = "Country";
-                oSheet.Cells[1, 9] = "ISP";
+                oSheet.Cells[1, 4] = "Client";
+                oSheet.Cells[1, 5] = "Start Date";
+                oSheet.Cells[1, 6] = "Start Time";
+                oSheet.Cells[1, 7] = "End Date";
+                oSheet.Cells[1, 8] = "End Time";
+                oSheet.Cells[1, 9] = "Title";
+                oSheet.Cells[1, 10] = "File Hash";
+                oSheet.Cells[1, 11] = "Country";
+                oSheet.Cells[1, 12] = "ISP";
 
                 //Format A1:F1 as bold, vertical alignment = center.
-                oSheet.get_Range("A1", "I1").Font.Bold = true;
-                oSheet.get_Range("A1", "I1").VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                oSheet.get_Range("A1", "K1").Font.Bold = true;
+                oSheet.get_Range("A1", "K1").VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
 
                 for(int i = 0; i < models.Count; i++)
                 {
                     oSheet.Cells[i + 2, 1] = models[i].No;
                     oSheet.Cells[i + 2, 2] = models[i].IpAddress;
                     oSheet.Cells[i + 2, 3] = models[i].Port;
-                    oSheet.Cells[i + 2, 4] = models[i].Date;
-                    oSheet.Cells[i + 2, 5] = models[i].Time;
-                    oSheet.Cells[i + 2, 6] = models[i].Title;
-                    oSheet.Cells[i + 2, 7] = models[i].FileHash;
-                    oSheet.Cells[i + 2, 8] = models[i].Country;
-                    oSheet.Cells[i + 2, 9] = models[i].ISP;
+                    oSheet.Cells[i + 2, 4] = models[i].Client;
+                    oSheet.Cells[i + 2, 5] = "=\"" + models[i].Date + "\"";
+                    oSheet.Cells[i + 2, 6] = models[i].Time;
+                    oSheet.Cells[i + 2, 7] = "=\"" + models[i].EndDate + "\"";
+                    oSheet.Cells[i + 2, 8] = models[i].EndTime;
+                    oSheet.Cells[i + 2, 9] = models[i].Title;
+                    oSheet.Cells[i + 2, 10] = models[i].FileHash;
+                    oSheet.Cells[i + 2, 11] = models[i].Country;
+                    oSheet.Cells[i + 2, 12] = models[i].ISP;
                 }
 
                 //AutoFit columns A:H.

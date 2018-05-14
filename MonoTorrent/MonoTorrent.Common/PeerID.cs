@@ -134,6 +134,14 @@ namespace MonoTorrent.Common
             get { return this.client; }
         }
 
+        public string ClientExp
+        {
+            get
+            {
+                return this.client.ToString() + " " + this.version;
+            }
+        }
+
         /// <summary>
         /// The peer's ID
         /// </summary>

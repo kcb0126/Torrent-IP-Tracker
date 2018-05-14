@@ -489,7 +489,7 @@ namespace MonoTorrent.Client
             DateTime nowTime = DateTime.Now;
             DateTime thirtySecondsAgo = nowTime.AddSeconds(-50);
             DateTime nintySecondsAgo = nowTime.AddSeconds(-90);
-            DateTime onhundredAndEightySecondsAgo = nowTime.AddSeconds(-180);
+            DateTime onhundredAndEightySecondsAgo = nowTime.AddSeconds(-1800);
 
             for (int i = 0; i < manager.Peers.ConnectedPeers.Count; i++)
             {
@@ -517,8 +517,8 @@ namespace MonoTorrent.Client
 
                 if (thirtySecondsAgo > id.LastMessageReceived && id.AmRequestingPiecesCount > 0)
                 {
-                    manager.Engine.ConnectionManager.CleanupSocket(id, "Didn't send pieces");
-                    continue;
+                    //manager.Engine.ConnectionManager.CleanupSocket(id, "Didn't send pieces");
+                    //continue;
                 }
             }
 
@@ -577,8 +577,8 @@ namespace MonoTorrent.Client
             // Remove inactive peers we haven't heard from if we're downloading
             if (manager.State == TorrentState.Downloading && manager.lastCalledInactivePeerManager + TimeSpan.FromSeconds(5) < DateTime.Now)
             {
-                manager.InactivePeerManager.TimePassed();
-                manager.lastCalledInactivePeerManager = DateTime.Now;
+                //manager.InactivePeerManager.TimePassed();
+                //manager.lastCalledInactivePeerManager = DateTime.Now;
             }
 
             // Now choke/unchoke peers; first instantiate the choke/unchoke manager if we haven't done so already

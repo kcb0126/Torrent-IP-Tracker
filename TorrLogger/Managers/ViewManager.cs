@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TorrLogger.Models;
 using TorrLogger.ViewModels;
 
 namespace TorrLogger.Managers
@@ -33,9 +34,9 @@ namespace TorrLogger.Managers
 
         private int lastIndexOfClientViewModel = 0;
 
-        public void AddClientViewModel(string ip, int port, string title, string client, string hash, string isp, string country)
+        public void AddClientViewModel(ClientModel client)
         {
-            var clientViewModel = new ClientViewModel { No = ++lastIndexOfClientViewModel, IpAddress = ip, Port = port, Client = client, Title = title, FileHash = hash, Date = DateTime.Now.ToString("dd:MM:yyyy"), Time = DateTime.Now.ToString("HH:mm:ss"), Country = country, ISP = isp };
+            var clientViewModel = new ClientViewModel { No = ++lastIndexOfClientViewModel, IpAddress = client.IpAddress, Port = client.Port, Client = client.Client, Title = client.TorrentModel.Name, FileHash = client.TorrentModel.TorrentManager.Torrent.InfoHash.ToString(), Date = DateTime.Now.ToString("dd:MM:yyyy"), Time = DateTime.Now.ToString("HH:mm:ss"), EndDate = DateTime.Now.ToString("dd:MM:yyyy"), EndTime = DateTime.Now.ToString("HH:mm:ss"), Country = client.Country, ISP = client.ISP, IsActive = true };
             Action<ClientViewModel> addMethod = ViewManager.Instance.ClientViewModels.Add;
             Application.Current.Dispatcher.BeginInvoke(addMethod, clientViewModel);
         }
