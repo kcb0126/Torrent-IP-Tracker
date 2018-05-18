@@ -233,11 +233,11 @@ namespace TorrLogger.Managers
         public List<string> GetAllIsps()
         {
             List<string> isps = new List<string>();
-            foreach(ClientModel client in clientModels)
+            foreach(ClientViewModel model in ViewManager.Instance.ClientViewModels)
             {
-                if(!isps.Contains(client.ISP))
+                if(!isps.Contains(model.ISP))
                 {
-                    isps.Add(client.ISP);
+                    isps.Add(model.ISP);
                 }
             }
             return isps;
@@ -246,9 +246,12 @@ namespace TorrLogger.Managers
         public List<string> GetAllTitles()
         {
             List<string> titles = new List<string>();
-            foreach(TorrentModel torrent in torrentModels)
+            foreach(ClientViewModel model in ViewManager.Instance.ClientViewModels)
             {
-                titles.Add(torrent.Name);
+                if(!titles.Contains(model.Title))
+                {
+                    titles.Add(model.Title);
+                }
             }
             return titles;
         }

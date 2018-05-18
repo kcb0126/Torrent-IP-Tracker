@@ -182,5 +182,11 @@ namespace TorrLogger
                 ExcelManager.Instance.SaveClientViewModels(ViewManager.Instance.ClientViewModelsForExport, dlg.FileName);
             }
         }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            ViewManager.Instance.ClientViewModels.Clear();
+            SQLiteManager.Instance.ClearHistory();
+        }
     }
 }
